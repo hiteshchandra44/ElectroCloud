@@ -66,14 +66,9 @@ ElectroCloud is a cloud-based system for real-time electricity usage monitoring,
 ElectroCloud/
 ├── backend/
 │   ├── lambda_function.py
-│   └── s3_upload/
 ├── frontend/
 │   ├── app.py
 │   ├── requirements.txt
-│   └── components/
-│       ├── dashboard.py
-│       ├── charts.py
-│       └── data_viz.py
 ├── glue/
 │   └── crawler_config.json
 ├── athena/

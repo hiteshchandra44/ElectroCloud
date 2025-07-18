@@ -1,0 +1,17 @@
+{
+  "Name": "electrocloud-crawler",
+  "Role": "arn:aws:iam::YOUR_ACCOUNT_ID:role/AWSGlueServiceRole",
+  "DatabaseName": "electrocloud_db",
+  "Targets": {
+    "S3Targets": [
+      {
+        "Path": "s3://your-s3-bucket-name/data/"
+      }
+    ]
+  },
+  "Schedule": "cron(0 * * * ? *)",  
+  "SchemaChangePolicy": {
+    "UpdateBehavior": "UPDATE_IN_DATABASE",
+    "DeleteBehavior": "DEPRECATE_IN_DATABASE"
+  }
+}

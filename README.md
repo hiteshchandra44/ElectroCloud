@@ -11,7 +11,7 @@ ElectroCloud is a cloud-based system for real-time electricity usage monitoring,
 - Scalable architecture using AWS services
 - Data pipeline with AWS Lambda, API Gateway, and S3
 - Queryable datasets using AWS Glue and Athena
-- Responsive UI using React for usage visualization
+- Interactive dashboard using Streamlit for usage visualization
 - Integrated logging & monitoring with AWS CloudWatch
 
 ---
@@ -40,7 +40,7 @@ ElectroCloud is a cloud-based system for real-time electricity usage monitoring,
                                               |
                                               v
                                     +-----------------+
-                                    | React Frontend |
+                                    | Streamlit Frontend |
                                     +-----------------+
 ```
 
@@ -50,12 +50,12 @@ ElectroCloud is a cloud-based system for real-time electricity usage monitoring,
 
 | Layer              | Tools Used                          |
 |-------------------|-------------------------------------|
-| Frontend          | React.js, Tailwind CSS              |
+| Frontend          | Streamlit, Python              |
 | Backend           | AWS Lambda, API Gateway             |
 | Storage           | Amazon S3                           |
 | Data Query Engine | AWS Glue, AWS Athena                |
 | Monitoring        | Amazon CloudWatch                   |
-| Language          | Python (backend), JavaScript (frontend) |
+| Language          | Python (backend & frontend), JavaScript (minimal) |
 | Deployment        | AWS Console & VS Code SSH/CLI       |
 
 ---
@@ -68,9 +68,12 @@ ElectroCloud/
 │   ├── lambda_function.py
 │   └── s3_upload/
 ├── frontend/
-│   ├── public/
-│   └── src/
-│       └── components/
+│   ├── app.py
+│   ├── requirements.txt
+│   └── components/
+│       ├── dashboard.py
+│       ├── charts.py
+│       └── data_viz.py
 ├── glue/
 │   └── crawler_config.json
 ├── athena/
@@ -84,29 +87,22 @@ ElectroCloud/
 
 ---
 
-## 🔧 Setup Instructions
+## 🔧 Deployment Overview
 
-### 1. Clone the Repo
-```bash
-git clone https://github.com/yourusername/electrocloud.git
-cd electrocloud
-```
+This system is deployed on AWS cloud infrastructure with the following components:
 
-### 2. Backend Setup (Lambda & S3)
-- Set up an AWS Lambda function with `lambda_function.py`
-- Create an S3 bucket and configure event triggers (optional)
+### Backend Services
+- **AWS Lambda**: Processes electricity consumption data and handles billing logic
+- **Amazon S3**: Stores flattened JSON data for efficient querying
+- **AWS API Gateway**: Provides RESTful endpoints for data ingestion
 
-### 3. Configure Glue & Athena
-- Use `crawler_config.json` to create a Glue Crawler
-- Run Athena queries from `athena/queries.sql`
+### Data Processing Pipeline
+- **AWS Glue Crawler**: Automatically discovers and catalogs data schema
+- **Amazon Athena**: Enables SQL-based querying of consumption data
 
-### 4. Frontend (React App)
-```bash
-cd frontend
-npm install
-npm start
-```
-Make sure `.env` has the correct S3/Athena endpoints or API gateway URLs.
+### Frontend Application
+- **Streamlit Dashboard**: Deployed on AWS EC2/ECS for interactive data visualization
+- **AWS CloudWatch**: Monitors system performance and provides logging
 
 ---
 
@@ -119,16 +115,20 @@ Make sure `.env` has the correct S3/Athena endpoints or API gateway URLs.
 
 ---
 
-## 📈 Sample Athena Query
+## 📈 Data Analytics Capabilities
 
-```sql
-SELECT
-    meter_id,
-    SUM(consumption_kWh) AS total_consumption,
-    billing_month
-FROM electricity_usage
-GROUP BY meter_id, billing_month;
-```
+The system provides comprehensive analytics through AWS Athena, enabling:
+
+- **Consumption Analysis**: Real-time monitoring of electricity usage patterns
+- **Billing Automation**: Automated calculation of charges based on usage tiers
+- **Trend Forecasting**: Historical data analysis for predictive insights
+- **Cost Optimization**: Identification of peak usage periods and cost-saving opportunities
+
+### Key Query Examples:
+- Monthly consumption summaries by meter
+- Peak usage hour identification
+- Billing calculation with tiered pricing
+- Historical trend analysis for forecasting
 
 ---
 
@@ -136,25 +136,7 @@ GROUP BY meter_id, billing_month;
 
 - [AWS Lambda Docs](https://docs.aws.amazon.com/lambda/)
 - [Athena Docs](https://docs.aws.amazon.com/athena/)
-- [React Docs](https://react.dev/)
+- [Streamlit Docs](https://docs.streamlit.io/)
 
 ---
 
-## 🤝 Contributors
-
-**Hitesh Chandra** – Cloud Architect, Full Stack Developer
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License. See LICENSE for more information.
-
----
-
-## 📬 Contact
-
-For questions or collaboration:
-
-- 📧 Email: hiteshchandra@email.com
-- 💼 LinkedIn: linkedin.com/in/hiteshchandra
